@@ -2,6 +2,8 @@
 .godot/
 /android/
 
-
-models/
-dictionary/
+*.png
+*.png.import
+*.fbx
+*.Fbx
+*.Fbx.import
