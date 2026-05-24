@@ -1,19 +1,24 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
+using System.Resources;
 using System.Text.Json;
 
 public partial class SkeletalAnimationPlayer : Node3D
 {
 	[Export] public NodePath SkeletonPath;
 
-	[Export(PropertyHint.File, ".json")]
-	public string AnimationToBePlayed = "";
+	[Export(PropertyHint.File, ".json")] public string AnimationToBePlayed = "";
+	[Export] public float AnimationSpeed = 1.0f;
+
 	private Skeleton3D skeleton;
 	private AnimationData animation;
 	private int currentFrame = 0;
+	private int frameCount = 0;
 	const float FRAME_TIME = 1f / 30f;
 	private float timer = 0;
+	
 
 	public override void _Ready()
 	{
@@ -40,8 +45,10 @@ public partial class SkeletalAnimationPlayer : Node3D
 			return;
 		}
 
-		timer += (float)delta;
+		// isso aqui controla a velocidade de animação saindo do while mais rápido ou mais lento
+		timer += (float)delta * AnimationSpeed;
 
+		// aplica os dados de quaternion a cada osso naquele frame especificado, controlado pela variável timer
 		while (timer >= FRAME_TIME)
 		{
 			GD.Print($"Playing frame {currentFrame}");
@@ -138,36 +145,24 @@ public partial class SkeletalAnimationPlayer : Node3D
 			string boneName =
 				bone.Key;
 
-			int id =
-				skeleton.FindBone(
-					boneName
-				);
+			int id = skeleton.FindBone(boneName);
 
 			if (id == -1)
 			{
-				GD.Print(
-					$"Bone not found: {boneName}"
-				);
+				GD.Print($"Bone not found: {boneName}");
 
 				continue;
 			}
 
-			float[] q =
-				bone.Value;
+			float[] q = bone.Value;
 
 			if (q.Length != 4)
 			{
-				GD.PrintErr(
-					$"Invalid quaternion {boneName}"
-				);
-
+				GD.PrintErr($"Invalid quaternion {boneName}");
 				continue;
 			}
 
-			// GD.Print(
-			// 	$"{boneName} -> [{q[0]}, {q[1]}, {q[2]}, {q[3]}]"
-			// );
-
+			// quaternion -> x, y , z, w
 			Quaternion quat =
 				new Quaternion(
 					q[0],
@@ -176,18 +171,10 @@ public partial class SkeletalAnimationPlayer : Node3D
 					q[3]
 				);
 
-			Transform3D pose =
-				skeleton.GetBonePose(
-					id
-				);
+		Quaternion rest = skeleton.GetBoneRest(id).Basis.GetRotationQuaternion();
 
-			pose.Basis =
-				new Basis(quat);
-
-			skeleton.SetBonePose(
-				id,
-				pose
-			);
+		// aplica o quaternion em relação à posição de referência (rest) do modelo
+    skeleton.SetBonePoseRotation(id, rest * quat);
 
 			applied++;
 		}

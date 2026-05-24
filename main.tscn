@@ -2,13 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://cpoxb8bynp0y3" path="res://models/CLARA_UNITY.Fbx" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://b67pfduvjoqrr" path="res://scripts/SkeletalAnimationPlayer.cs" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://dlfxl253cdki0" path="res://assets/360_F_359477614_xvzgnWSpINGzLmGIoyQCt5mZ9lHBEEO1.jpg" id="3_h2yge"]
 
 [node name="CLARA_UNITY" unique_id=1940145040 instance=ExtResource("1_0xm2m")]
 script = ExtResource("2_h2yge")
 SkeletonPath = NodePath("Skeleton3D")
 AnimationToBePlayed = "res://json_dictionary/clara_RU_salada_067_Motion.json"
+AnimationSpeed = 1.2
 
 [node name="Skeleton3D" parent="." index="0" unique_id=1110758500]
+rotation_edit_mode = 1
 bones/0/position = Vector3(2.3978782e-06, 0, -0.020506661)
 bones/1/position = Vector3(-1.4551915e-13, -2.3841857e-09, 0.9447275)
 bones/1/rotation = Quaternion(0.7071063, -4.0800514e-05, 4.0423154e-05, 0.70710725)
@@ -88,5 +91,12 @@ bones/99/rotation = Quaternion(2.9876553e-06, 1.6530996e-07, -2.0780135e-07, 1)
 bones/100/rotation = Quaternion(1.205435e-06, -2.7310617e-14, -1.6659034e-07, 1)
 
 [node name="Camera3D" type="Camera3D" parent="." index="2" unique_id=984688954]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0014902353, 1.4323199, 0.7750646)
+transform = Transform3D(0.9999376, 7.2944277e-09, 0.0111698825, -0.0010311916, 0.99572957, 0.092312634, -0.011122184, -0.0923183, 0.99566746, 0.030700445, 1.468011, 1.5175908)
 fov = 52.671627
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Camera3D" index="0" unique_id=153593752]
+transform = Transform3D(0.9999775, 0.006385686, 0.002005185, -0.006385684, 0.82047117, 0.5716522, 0.0020051943, -0.5716522, 0.82049364, -0.009132342, 1.69986, 0.8175343)
+
+[node name="Sprite3D" type="Sprite3D" parent="." index="3" unique_id=703305021]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 1.5380895, -0.68731976)
+texture = ExtResource("3_h2yge")
