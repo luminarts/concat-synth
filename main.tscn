@@ -100,3 +100,12 @@ transform = Transform3D(0.9999775, 0.006385686, 0.002005185, -0.006385684, 0.820
 [node name="Sprite3D" type="Sprite3D" parent="." index="3" unique_id=703305021]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 1.5380895, -0.68731976)
 texture = ExtResource("3_h2yge")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." index="4" unique_id=1980593603]
+
+[node name="Button" type="Button" parent="CanvasLayer" index="0" unique_id=1047509371]
+offset_left = 88.0
+offset_top = 267.0
+offset_right = 262.72223
+offset_bottom = 352.0
+text = "Começar"

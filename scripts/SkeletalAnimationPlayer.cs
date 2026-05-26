@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Resources;
+using System.Runtime.Serialization;
 using System.Text.Json;
 
 public partial class SkeletalAnimationPlayer : Node3D
@@ -14,15 +15,19 @@ public partial class SkeletalAnimationPlayer : Node3D
 
 	private Skeleton3D skeleton;
 	private AnimationData animation;
+	private string NextAnimationToBePlayed = "";
+	private string PreviousAnimation = "";
 	private int currentFrame = 0;
 	private int frameCount = 0;
 	const float FRAME_TIME = 1f / 30f;
 	private float timer = 0;
+	private bool startPressed = false;
 	
 
 	public override void _Ready()
 	{
-		GD.Print("=== READY ===");
+		Button startButton = GetNode<Button>("CanvasLayer/Button");
+		startButton.Pressed += OnButtonPressed;
 
 		skeleton = GetNode<Skeleton3D>(SkeletonPath);
 
@@ -34,38 +39,57 @@ public partial class SkeletalAnimationPlayer : Node3D
 
 		GD.Print($"Skeleton loaded: {skeleton.Name}");
 
+		PreviousAnimation = AnimationToBePlayed;
 		LoadAnimation();
 	}
 
 	public override void _Process(double delta)
 	{
-		if (animation == null)
+		if (startPressed)
 		{
-			GD.Print("Animation is NULL");
-			return;
-		}
-
-		// isso aqui controla a velocidade de animação saindo do while mais rápido ou mais lento
-		timer += (float)delta * AnimationSpeed;
-
-		// aplica os dados de quaternion a cada osso naquele frame especificado, controlado pela variável timer
-		while (timer >= FRAME_TIME)
-		{
-			GD.Print($"Playing frame {currentFrame}");
-
-			ApplyFrame(currentFrame);
-
-			currentFrame++;
-
-			if (currentFrame >= animation.FrameData.Count)
+			if (animation == null)
 			{
-				GD.Print("Looping animation");
-
-				currentFrame = 0;
+				GD.Print("Animation is NULL");
+				return;
 			}
 
-			timer -= FRAME_TIME;
+			// isso aqui controla a velocidade de animação saindo do while mais rápido ou mais lento
+			timer += (float)delta * AnimationSpeed;
+
+			// aplica os dados de quaternion a cada osso naquele frame especificado, controlado pela variável timer
+			while (timer >= FRAME_TIME)
+			{
+				GD.Print($"Playing frame {currentFrame}");
+
+				ApplyFrame(currentFrame);
+
+				currentFrame++;
+
+				if (currentFrame >= animation.FrameData.Count)
+				{
+					NextAnimationToBePlayed = "res://json_dictionary/clara_RU_sobremesa_025_Motion.json";
+					
+					// MUDAR AQUI DEPOIS PRA FICAR INDO DE UMA PRA OUTRA ANIMAÇÃO
+					if (NextAnimationToBePlayed != AnimationToBePlayed) {
+						GD.Print("Next Animation");
+						PreviousAnimation = AnimationToBePlayed;
+						AnimationToBePlayed = NextAnimationToBePlayed;
+						LoadAnimation();
+					} else {
+						GD.Print("Looping animation");
+					}
+					currentFrame = 0;
+				}
+				timer -= FRAME_TIME;
+
+			}
 		}
+	}
+
+	private void OnButtonPressed() 
+	{
+		startPressed = true;
+		GD.Print("Started!");
 	}
 
 	void LoadAnimation()
@@ -183,4 +207,5 @@ public partial class SkeletalAnimationPlayer : Node3D
 			$"Applied {applied} bones"
 		);
 	}
+
 }
