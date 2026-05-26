@@ -7,8 +7,7 @@
 [node name="CLARA_UNITY" unique_id=1940145040 instance=ExtResource("1_0xm2m")]
 script = ExtResource("2_h2yge")
 SkeletonPath = NodePath("Skeleton3D")
-AnimationToBePlayed = "res://json_dictionary/clara_RU_salada_067_Motion.json"
-AnimationSpeed = 1.2
+AnimationSpeed = 0.8
 
 [node name="Skeleton3D" parent="." index="0" unique_id=1110758500]
 rotation_edit_mode = 1

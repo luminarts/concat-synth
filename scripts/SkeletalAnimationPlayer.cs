@@ -17,6 +17,7 @@ public partial class SkeletalAnimationPlayer : Node3D
 		"res://json_dictionary/REPOLHO_1.json",
 		"res://json_dictionary/JUNTO-COM_1.json",
 		"res://json_dictionary/LARANJA_1.json"
+		// "res://json_dictionary/clara_RU_salada_067_Motion.json"
 	};
 
 	private Skeleton3D skeleton;
@@ -185,7 +186,7 @@ public partial class SkeletalAnimationPlayer : Node3D
   */
 		transitionFrames.Clear();
 
-		int numOfInterpolationFrames = 10;
+		int numOfInterpolationFrames = 5;
 		
 		for (int i = 1; i <= numOfInterpolationFrames; i++)
 		{

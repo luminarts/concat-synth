@@ -24,9 +24,9 @@ armature.rotation_mode = "QUATERNION"
 scene = bpy.context.scene
 
 ##### frame counting #######
-frame_start = 221  
-frame_end = 319
-name = "NABO"
+frame_start = 148  
+frame_end = 202
+name = "LARANJA"
 
 total_frames = frame_end - frame_start + 1
 
@@ -35,7 +35,7 @@ quaternion_data = {
     "FrameCount": total_frames,
 }
 
-for frame in range(total_frames):
+for frame in range(frame_start, frame_end + 1):
     scene.frame_set(frame)
     # print(f"Frame {frame}:")
 
