@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://cgmelywoq6u6p"]
-
-[ext_resource type="PackedScene" uid="uid://cpoxb8bynp0y3" path="res://models/CLARA_UNITY.Fbx" id="1_0f027"]
-
-[node name="CLARA_UNITY" unique_id=383371245 instance=ExtResource("1_0f027")]

@@ -7,3 +7,7 @@
 *.fbx
 *.Fbx
 *.Fbx.import
+*.blend
+*.blend.import
+*.jpg
+*.jpg.import
