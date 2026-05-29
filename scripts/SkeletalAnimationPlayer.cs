@@ -20,7 +20,7 @@ public partial class SkeletalAnimationPlayer : Node3D
 		// "res://json_dictionary/clara_RU_salada_067_Motion.json"
 	};
 
-	private Skeleton3D skeleton;
+	public Skeleton3D skeleton;
 	private AnimationData animation;
 	private List<FrameInfo> transitionFrames = new();
 	private bool playingTransition = false;
@@ -175,7 +175,7 @@ public partial class SkeletalAnimationPlayer : Node3D
 
 		}
 	}
-		void LoadTransition(FrameInfo prevLastFrame, FrameInfo nextFirstFrame)
+	void LoadTransition(FrameInfo prevLastFrame, FrameInfo nextFirstFrame)
 	{
 	/*
     1. Iterar a lista de animações escolhidas
